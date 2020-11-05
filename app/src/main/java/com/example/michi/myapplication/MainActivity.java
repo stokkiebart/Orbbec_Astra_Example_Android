@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
             orbbecCamAndroid = new OrbbecCamAndroid(getApplicationContext(), 640, 480);
         }
 
+        getDataButton = (Button) findViewById(R.id.getDataButton);
+
         getDataButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
