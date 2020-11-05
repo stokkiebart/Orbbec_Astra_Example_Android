@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 ArrayList<Vector3D> vector3DList = orbbecCamAndroid.get3DVectors();
 
-                Log.e("DATA", "x of 200th vector: " + vector3DList.get(200).getX());
-                Log.e("DATA", "y of 200th vector: " + vector3DList.get(200).getY());
-                Log.e("DATA", "z of 200th vector: " + vector3DList.get(200).getZ());
+                Log.e("DATA", "x of 200th vector: " + vector3DList.get(1000).getX());
+                Log.e("DATA", "y of 200th vector: " + vector3DList.get(1000).getY());
+                Log.e("DATA", "z of 200th vector: " + vector3DList.get(1000).getZ());
                 Log.e("DATA", "size of list: " + vector3DList.size());
             }
         }).start();
