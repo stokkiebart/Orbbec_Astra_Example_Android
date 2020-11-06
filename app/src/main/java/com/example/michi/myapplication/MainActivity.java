@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 import com.orbbec.astra.Vector3D;
 
+import java.net.SocketException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private OrbbecCamAndroid orbbecCamAndroid;
     private Button getDataButton;
+    private UDPServer3Dcamera udpServer3Dcamera;
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -30,9 +32,16 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = (TextView) findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
 
-        // Initialize OrbbecCam only if the app is not running in an emulator
         if (!isEmulator()) {
             orbbecCamAndroid = new OrbbecCamAndroid(getApplicationContext(), 640, 480);
+            try {
+                udpServer3Dcamera = UDPServer3Dcamera.getServer(getApplicationContext());
+                if(!udpServer3Dcamera.isAlive()) {
+                    udpServer3Dcamera.start();
+                }
+            } catch (SocketException e) {
+                e.printStackTrace();
+            }
         }
 
         getDataButton = (Button) findViewById(R.id.getDataButton);
@@ -56,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 ArrayList<Vector3D> vector3DList = orbbecCamAndroid.get3DVectors();
 
-                Log.e("DATA", "x of 200th vector: " + vector3DList.get(1000).getX());
-                Log.e("DATA", "y of 200th vector: " + vector3DList.get(1000).getY());
-                Log.e("DATA", "z of 200th vector: " + vector3DList.get(1000).getZ());
+                Log.e("DATA", "x of 1000th vector: " + vector3DList.get(1000).getX());
+                Log.e("DATA", "y of 1000th vector: " + vector3DList.get(1000).getY());
+                Log.e("DATA", "z of 1000th vector: " + vector3DList.get(1000).getZ());
                 Log.e("DATA", "size of list: " + vector3DList.size());
             }
         }).start();
